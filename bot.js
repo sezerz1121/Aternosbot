@@ -20,7 +20,7 @@ async function startServer(message, onlineStatus) {
         // Launch the browser and open a new blank page
        
         const browser = await puppeteerExtra.launch({
-            
+            executablePath: '/usr/bin/google-chrome-stable',
             // Set to true for headless mode
             headless: "new",
         });
@@ -80,7 +80,7 @@ async function stopServer(message,onlineStatus)  {
     
   
     const browser = await puppeteerExtra.launch({
-      
+         executablePath: '/usr/bin/google-chrome-stable',
        // Set to true for headless mode
        headless: "new",
     });
@@ -115,7 +115,7 @@ async function stopServer(message,onlineStatus)  {
     
   
     const browser = await puppeteerExtra.launch({
-      
+      executablePath: '/usr/bin/google-chrome-stable',
       headless: "new",
     });
     const page = await browser.newPage();
@@ -174,7 +174,7 @@ async function stopServer(message,onlineStatus)  {
     
   
     const browser = await puppeteerExtra.launch({
-      
+      executablePath: '/usr/bin/google-chrome-stable',
       headless: "new",
     });
     const page = await browser.newPage();
