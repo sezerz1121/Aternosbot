@@ -17,32 +17,22 @@ var onlineStatus =false;
 //functions 
 async function startServer(message, onlineStatus) {
     try {
-        // Launch the browser and open a new blank page
-       
         const browser = await puppeteerExtra.launch({
             args: ['--no-sandbox'],
-            // Set to true for headless mode
-            headless: "new",
+            headless: true, // Set to true for headless mode
         });
         const page = await browser.newPage();
 
-        // Navigate the page to a URL
         await page.goto('https://aternos.org/go/');
-
-        // Fill in the username and password fields
-       await page.waitForSelector('.username');
+        await page.waitForSelector('.username', { timeout: 60000 }); // Increase timeout if needed
         await page.type('.username', username);
-        await page.waitForSelector('.password');
+        await page.waitForSelector('.password', { timeout: 60000 }); // Increase timeout if needed
         await page.type('.password', password);
-
-        // Click the login button (if there's a specific button element)
         await page.click('.login-button');
 
-        // Wait for the login to complete
         await page.waitForNavigation();
         await page.waitForTimeout(4000);
 
-        // Click the "start" button
         await page.click('.servercard.offline');
         await page.waitForTimeout(4000);
         await page.click('#start');
@@ -50,7 +40,6 @@ async function startServer(message, onlineStatus) {
 
         let status = '';
 
-        // Infinite loop to continuously check the status
         while (true) {
             status = await page.evaluate(() => {
                 const span = document.querySelector('.statuslabel-label');
@@ -58,18 +47,15 @@ async function startServer(message, onlineStatus) {
             });
 
             if (status === 'Online') {
-                // Log "Online" message to Discord
                 message.channel.send('Online');
                 onlineStatus = true;
-                break; // Exit the loop once status is "Online"
+                break;
             } else {
-                // Log "Status is not 'Online' yet. Retrying..." message to Discord
                 message.channel.send('Starting');
-                await page.waitForTimeout(15000); // Wait for 15 seconds before retrying
+                await page.waitForTimeout(15000);
             }
         }
 
-        // Close the browser
         await browser.close();
         return onlineStatus;
     } catch (error) {
