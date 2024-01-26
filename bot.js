@@ -15,18 +15,20 @@ var username = "ZSadwa";
 var password = "n.85WpqgFasL*Yq";
 var onlineStatus =false;
 //functions 
+const puppeteerOptions = {
+    args: ['--no-sandbox'],
+    headless: true, // Set to true for headless mode
+};
+
 async function startServer(message, onlineStatus) {
     try {
-        const browser = await puppeteerExtra.launch({
-            args: ['--no-sandbox'],
-            headless: "new", // Set to true for headless mode
-        });
+        const browser = await puppeteer.launch(puppeteerOptions);
         const page = await browser.newPage();
 
-        await page.goto('https://aternos.org/go/',{ timeout: 60000 });
-        await page.waitForNavigation({ waitUntil: 'networkidle0' });// Increase timeout if needed
+        await page.goto('https://aternos.org/go/', { timeout: 60000 });
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });
+
         await page.type('.username', username);
-        ; // Increase timeout if needed
         await page.type('.password', password);
         await page.click('.login-button');
 
@@ -63,170 +65,117 @@ async function startServer(message, onlineStatus) {
     }
 }
 
-async function stopServer(message,onlineStatus)  {
-    // Launch the browser and open a new blank page
-    
-  
-    const browser = await puppeteerExtra.launch({
-         args: ['--no-sandbox'],
-       // Set to true for headless mode
-       headless: "new",
-    });
-    const page = await browser.newPage();
-  
-    // Navigate the page to a URL
-     await page.goto('https://aternos.org/go/',{ timeout: 60000 });
-  
-    // Fill in the username and password fields
-    await page.type('.username', username);
-    await page.type('.password', password);
-  
-    // Click the login button (if there's a specific button element)
-    await page.click('.login-button');
-    
-    // Wait for the login to complete (you might need to adjust the waiting time)
-    await page.waitForNavigation();
-    await page.waitForTimeout(4000);
-    await page.click('.servercard.online');
-    await page.waitForTimeout(4000);
-    await page.click('#stop');
-    await page.waitForTimeout(2000);
-    onlineStatus=false;
-    
-    await browser.close();
-    message.channel.send('Now server is offline');
+async function stopServer(message, onlineStatus) {
+    try {
+        const browser = await puppeteer.launch(puppeteerOptions);
+        const page = await browser.newPage();
+
+        await page.goto('https://aternos.org/go/', { timeout: 60000 });
+
+        await page.type('.username', username);
+        await page.type('.password', password);
+        await page.click('.login-button');
+
+        await page.waitForNavigation();
+        await page.waitForTimeout(4000);
+
+        await page.click('.servercard.online');
+        await page.waitForTimeout(4000);
+        await page.click('#stop');
+        await page.waitForTimeout(2000);
+
+        onlineStatus = false;
+        await browser.close();
+
+        message.channel.send('Now server is offline');
+    } catch (error) {
+        console.error('Error occurred:', error.message);
+    }
+
     return onlineStatus;
-      
-  };
+}
 
-  async function serverStatus(message) {
-    
-  
-    const browser = await puppeteerExtra.launch({
-      args: ['--no-sandbox'],
-      headless: "new",
-    });
-    const page = await browser.newPage();
-  
+async function serverStatus(message) {
     try {
-      // Navigate the page to a URL
-       await page.goto('https://aternos.org/go/',{ timeout: 60000 });
-  
-      // Fill in the username and password fields
-      await page.type('.username', username);
-      await page.type('.password', password);
-  
-      // Click the login button (if there's a specific button element)
-      await page.click('.login-button');
-  
-      // Wait for the login to complete
-      await page.waitForNavigation();
-      await page.waitForTimeout(4000);
-  
-      // Click the server card (handle different scenarios)
-      try {
-        await page.click('.servercard.online');
-      } catch (error) {
-        try {
-          await page.click('.servercard.offline');
-        } catch (error) {
-          try {
-            await page.click('.servercard.loading');
-          } catch (error) {
-            console.error('Error clicking server card:', error.message);
-          }
-        }
-      }
-  
-      await page.waitForTimeout(4000);
-  
-      // Wait for the status label to be present
-      await page.waitForSelector('.statuslabel-label');
-  
-      // Get the text content of the status label
-      const status = await page.evaluate(() => {
-        const statusLabel = document.querySelector('.statuslabel-label');
-        return statusLabel ? statusLabel.textContent.trim() : 'Status label not found';
-      });
-  
-      message.channel.send('Server Status:'+ status);
-    } catch (error) {
-      console.error('Error navigating or fetching server status:', error.message);
-    } finally {
-      // Close the browser
-      await browser.close();
-    }
-  }
+        const browser = await puppeteer.launch(puppeteerOptions);
+        const page = await browser.newPage();
 
-  async function playerStatus(message) {
-    
-  
-    const browser = await puppeteerExtra.launch({
-      args: ['--no-sandbox'],
-      headless: "new",
-    });
-    const page = await browser.newPage();
-  
+        await page.goto('https://aternos.org/go/', { timeout: 60000 });
+
+        await page.type('.username', username);
+        await page.type('.password', password);
+        await page.click('.login-button');
+
+        await page.waitForNavigation();
+        await page.waitForTimeout(4000);
+
+        let status = '';
+
+        try {
+            await page.click('.servercard.online');
+        } catch (error) {
+            try {
+                await page.click('.servercard.offline');
+            } catch (error) {
+                try {
+                    await page.click('.servercard.loading');
+                } catch (error) {
+                    console.error('Error clicking server card:', error.message);
+                }
+            }
+        }
+
+        await page.waitForTimeout(4000);
+        await page.waitForSelector('.statuslabel-label');
+
+        status = await page.evaluate(() => {
+            const statusLabel = document.querySelector('.statuslabel-label');
+            return statusLabel ? statusLabel.textContent.trim() : 'Status label not found';
+        });
+
+        await browser.close();
+
+        message.channel.send('Server Status: ' + status);
+    } catch (error) {
+        console.error('Error occurred:', error.message);
+    }
+}
+
+async function playerStatus(message) {
     try {
-      // Navigate the page to a URL
-       await page.goto('https://aternos.org/go/',{ timeout: 60000 });
-  
-      // Fill in the username and password fields
-      await page.type('.username', username);
-      await page.type('.password', password);
-  
-      // Click the login button (if there's a specific button element)
-      await page.click('.login-button');
-  
-      // Wait for the login to complete
-      await page.waitForNavigation();
-      await page.waitForTimeout(4000);
-  
-      // Click the server card (handle different scenarios)
-      try {
-        await page.click('.servercard.online');
-      } catch (error) {
+        const browser = await puppeteer.launch(puppeteerOptions);
+        const page = await browser.newPage();
+
+        await page.goto('https://aternos.org/go/', { timeout: 60000 });
+
+        await page.type('.username', username);
+        await page.type('.password', password);
+        await page.click('.login-button');
+
+        await page.waitForNavigation();
+        await page.waitForTimeout(4000);
+
+        let playerCount = '';
+
         try {
-          await page.click('.servercard.offline');
+            await page.click('.servercard.online');
+            await page.waitForSelector('.live-status-box-value.js-players');
+            playerCount = await page.evaluate(() => {
+                const playerCountElement = document.querySelector('.live-status-box-value.js-players');
+                return playerCountElement ? playerCountElement.textContent.trim() : 'Player count not found';
+            });
         } catch (error) {
-          try {
-            await page.click('.servercard.loading');
-          } catch (error) {
-            console.error('Error clicking server card:', error.message);
-          }
+            console.error('Error fetching player count:', error.message);
+            playerCount = 'Player count not found';
         }
-      }
-  
-      await page.waitForTimeout(4000);
-  
-      
-  
-      // Wait for the player count element to be present
-      await page.waitForSelector('.live-status-box-value.js-players');
-  
-      // Get the text content of the player count
-      const playerCount = await page.evaluate(() => {
-        const playerCountElement = document.querySelector('.live-status-box-value.js-players');
-        return playerCountElement ? playerCountElement.textContent.trim() : 'Player count not found';
-      });
-  
-      message.channel.send('Player Count:'+playerCount);
+
+        await browser.close();
+
+        message.channel.send('Player Count: ' + playerCount);
     } catch (error) {
-      console.error('Error navigating or fetching server status:', error.message);
-    } finally {
-      // Close the browser
-      await browser.close();
+        console.error('Error occurred:', error.message);
     }
-  }
-
-
-
-
-
-
-
-
-
+}
 
 
 
