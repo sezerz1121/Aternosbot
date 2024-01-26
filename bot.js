@@ -18,9 +18,9 @@ var onlineStatus =false;
 async function startServer(message, onlineStatus) {
     try {
         // Launch the browser and open a new blank page
-        const chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+       
         const browser = await puppeteerExtra.launch({
-            executablePath: chromePath,
+            
             // Set to true for headless mode
             headless: "new",
         });
@@ -77,10 +77,10 @@ async function startServer(message, onlineStatus) {
 
 async function stopServer(message,onlineStatus)  {
     // Launch the browser and open a new blank page
-    const chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+    
   
     const browser = await puppeteerExtra.launch({
-      executablePath: chromePath,
+      
        // Set to true for headless mode
        headless: "new",
     });
@@ -112,10 +112,10 @@ async function stopServer(message,onlineStatus)  {
   };
 
   async function serverStatus(message) {
-    const chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+    
   
     const browser = await puppeteerExtra.launch({
-      executablePath: chromePath,
+      
       headless: "new",
     });
     const page = await browser.newPage();
@@ -171,10 +171,10 @@ async function stopServer(message,onlineStatus)  {
   }
 
   async function playerStatus(message) {
-    const chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+    
   
     const browser = await puppeteerExtra.launch({
-      executablePath: chromePath,
+      
       headless: "new",
     });
     const page = await browser.newPage();
