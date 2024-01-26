@@ -24,9 +24,9 @@ async function startServer(message, onlineStatus) {
         const page = await browser.newPage();
 
         await page.goto('https://aternos.org/go/');
-        await page.waitForSelector('.username', { timeout: 80000 }); // Increase timeout if needed
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });// Increase timeout if needed
         await page.type('.username', username);
-        await page.waitForSelector('.password', { timeout: 60000 }); // Increase timeout if needed
+        ; // Increase timeout if needed
         await page.type('.password', password);
         await page.click('.login-button');
 
