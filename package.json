@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon bot.js",
+    "start": "nodemon bot.js --no-sandbox",
     "dev": "nodemon bot.js"
   },
   "devDependencies": {
