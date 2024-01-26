@@ -146,11 +146,11 @@ async function restartServer(onlineStatus)  {
 
 
 async function serverStatus() {
-  const chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+  
 
   const browser = await puppeteerExtra.launch({
-    executablePath: chromePath,
-    headless: "new",
+    
+    headless: false,
   });
   const page = await browser.newPage();
 
@@ -208,10 +208,10 @@ serverStatus();
 
 
 async function playerStatus() {
-  const chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+  
 
   const browser = await puppeteerExtra.launch({
-    executablePath: chromePath,
+    
     headless: "new",
   });
   const page = await browser.newPage();

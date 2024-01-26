@@ -3,12 +3,14 @@ import puppeteer from 'puppeteer';
 import puppeteerExtra from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import AdblockerPlugin from 'puppeteer-extra-plugin-adblocker';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Add Puppeteer Ad Blocker plugin
 puppeteerExtra.use(AdblockerPlugin());
 // Add Puppeteer Stealth plugin
 puppeteerExtra.use(StealthPlugin());
-
+const TOKEN = process.env.DISCORD_TOKEN;
 var username = "ZSadwa";
 var password = "n.85WpqgFasL*Yq";
 var onlineStatus =false;
@@ -342,7 +344,7 @@ client.on('messageCreate', message => {
 
     // Your bot logic goes here
     if (message.content === '!ping') {
-        message.channel.send('Pong!');
+        message.channel.send('Pong');
     }
 });
 
@@ -350,4 +352,4 @@ client.on('messageCreate', message => {
 client.on('debug', console.log);
 
 // Login to Discord with your app's token
-client.login('MTEzODMzNDExMzA2NjEzOTcyOQ.G9LPLx.KfRLnXs8Osox8fLzuGR_kMEHyQF72iiV3hpkWw');
+client.login(TOKEN);
