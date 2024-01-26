@@ -17,7 +17,7 @@ var onlineStatus =false;
 //functions 
 const puppeteerOptions = {
     args: ['--no-sandbox'],
-    headless: true, // Set to true for headless mode
+    headless: "new", // Set to true for headless mode
 };
 
 async function startServer(message, onlineStatus) {
