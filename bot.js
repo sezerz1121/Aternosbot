@@ -23,7 +23,7 @@ async function startServer(message, onlineStatus) {
         });
         const page = await browser.newPage();
 
-        await page.goto('https://aternos.org/go/');
+        await page.goto('https://aternos.org/go/',{ timeout: 60000 });
         await page.waitForNavigation({ waitUntil: 'networkidle0' });// Increase timeout if needed
         await page.type('.username', username);
         ; // Increase timeout if needed
@@ -75,7 +75,7 @@ async function stopServer(message,onlineStatus)  {
     const page = await browser.newPage();
   
     // Navigate the page to a URL
-    await page.goto('https://aternos.org/go/');
+     await page.goto('https://aternos.org/go/',{ timeout: 60000 });
   
     // Fill in the username and password fields
     await page.type('.username', username);
@@ -110,7 +110,7 @@ async function stopServer(message,onlineStatus)  {
   
     try {
       // Navigate the page to a URL
-      await page.goto('https://aternos.org/go/');
+       await page.goto('https://aternos.org/go/',{ timeout: 60000 });
   
       // Fill in the username and password fields
       await page.type('.username', username);
@@ -169,7 +169,7 @@ async function stopServer(message,onlineStatus)  {
   
     try {
       // Navigate the page to a URL
-      await page.goto('https://aternos.org/go/');
+       await page.goto('https://aternos.org/go/',{ timeout: 60000 });
   
       // Fill in the username and password fields
       await page.type('.username', username);
