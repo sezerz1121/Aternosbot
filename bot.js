@@ -143,14 +143,38 @@ async function startServer(message,onlineStatus) {
       await page.type('.password', password);
       await page.click('.login-button');
   
+      
       await page.waitForNavigation();
-      await page.waitForSelector('.servercard');
+      try {
+        await page.click('.servercard.online');
+      } catch (error) {
+        try {
+          await page.click('.servercard.offline');
+        } catch (error) {
+          try {
+            await page.click('.servercard.loading');
+          } catch (error) {
+            console.error('Error clicking server card:', error.message);
+          }
+        }
+      }
   
-      const status = await page.evaluate(() => document.querySelector('.statuslabel-label')?.textContent.trim());
-      message.channel.send('Server Status: ' + (status || 'Status label not found'));
+     
+  
+      // Wait for the status label to be present
+      await page.waitForSelector('.statuslabel-label');
+  
+      // Get the text content of the status label
+      const status = await page.evaluate(() => {
+        const statusLabel = document.querySelector('.statuslabel-label');
+        return statusLabel ? statusLabel.textContent.trim() : 'Status label not found';
+      });
+  
+      message.channel.send('Server Status:'+ status);
     } catch (error) {
-      console.error('Error occurred:', error.message);
+      console.error('Error navigating or fetching server status:', error.message);
     } finally {
+      // Close the browser
       await browser.close();
     }
   }
@@ -173,13 +197,38 @@ async function startServer(message,onlineStatus) {
       await page.click('.login-button');
   
       await page.waitForNavigation();
-      await page.waitForSelector('.servercard');
+      try {
+        await page.click('.servercard.online');
+      } catch (error) {
+        try {
+          await page.click('.servercard.offline');
+        } catch (error) {
+          try {
+            await page.click('.servercard.loading');
+          } catch (error) {
+            console.error('Error clicking server card:', error.message);
+          }
+        }
+      }
   
-      const playerCount = await page.evaluate(() => document.querySelector('.live-status-box-value.js-players')?.textContent.trim());
-      message.channel.send('Player Count: ' + (playerCount || 'Player count not found'));
+      
+  
+      
+  
+      // Wait for the player count element to be present
+      await page.waitForSelector('.live-status-box-value.js-players');
+  
+      // Get the text content of the player count
+      const playerCount = await page.evaluate(() => {
+        const playerCountElement = document.querySelector('.live-status-box-value.js-players');
+        return playerCountElement ? playerCountElement.textContent.trim() : 'Player count not found';
+      });
+  
+      message.channel.send('Player Count:'+playerCount);
     } catch (error) {
-      console.error('Error occurred:', error.message);
+      console.error('Error navigating or fetching server status:', error.message);
     } finally {
+      // Close the browser
       await browser.close();
     }
   }
