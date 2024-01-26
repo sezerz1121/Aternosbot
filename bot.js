@@ -19,12 +19,12 @@ async function startServer(message, onlineStatus) {
     try {
         const browser = await puppeteerExtra.launch({
             args: ['--no-sandbox'],
-            headless: true, // Set to true for headless mode
+            headless: "new", // Set to true for headless mode
         });
         const page = await browser.newPage();
 
         await page.goto('https://aternos.org/go/');
-        await page.waitForSelector('.username', { timeout: 60000 }); // Increase timeout if needed
+        await page.waitForSelector('.username', { timeout: 80000 }); // Increase timeout if needed
         await page.type('.username', username);
         await page.waitForSelector('.password', { timeout: 60000 }); // Increase timeout if needed
         await page.type('.password', password);
