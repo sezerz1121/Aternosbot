@@ -30,7 +30,9 @@ async function startServer(message, onlineStatus) {
         await page.goto('https://aternos.org/go/');
 
         // Fill in the username and password fields
+       await page.waitForSelector('.username');
         await page.type('.username', username);
+        await page.waitForSelector('.password');
         await page.type('.password', password);
 
         // Click the login button (if there's a specific button element)
