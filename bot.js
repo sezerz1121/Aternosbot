@@ -17,7 +17,7 @@ var onlineStatus =false;
 //functions 
 
 
-async function startServer(onlineStatus, message) {
+async function startServer(message,onlineStatus) {
     const browser = await puppeteerExtra.launch({
       args: ['--no-sandbox'],
       headless: "new",
@@ -60,7 +60,7 @@ async function startServer(onlineStatus, message) {
     }
   }
   
-  async function stopServer(onlineStatus, message) {
+  async function stopServer(message,onlineStatus) {
     const browser = await puppeteerExtra.launch({
       args: ['--no-sandbox'],
       headless: "new",
