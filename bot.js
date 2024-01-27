@@ -234,7 +234,92 @@ async function startServer(message,onlineStatus) {
   }
 
 
+async function  playerNames(message) {
+  const browser = await puppeteerExtra.launch({
+    args: ['--no-sandbox'],
+    headless: "new",
+    defaultViewport: null,
+  });
+  const page = await browser.newPage();
 
+  try {
+    // Navigate to the page
+    await page.goto('https://aternos.org/go/');
+    await page.type('.username', username);
+    await page.type('.password', password);
+
+    // Click the login button (if there's a specific button element)
+    await page.click('.login-button');
+
+    // Wait for the login to complete
+    await page.waitForNavigation();
+    await page.waitForTimeout(4000);
+
+    // Click the server card (handle different scenarios)
+    try {
+      await page.click('.servercard.online');
+    } catch (error) {
+      try {
+        await page.click('.servercard.offline');
+      } catch (error) {
+        try {
+          await page.click('.servercard.loading');
+        } catch (error) {
+          console.error('Error clicking server card:', error.message);
+        }
+      }
+    }
+
+    await page.waitForTimeout(4000);
+    
+    // Click on the navigation toggle icon to toggle the navigation menu
+    await page.click('i.fas.fa-bars');
+
+    // Wait for the navigation menu animation to complete
+    await page.waitForTimeout(1000); // Adjust the timeout as needed
+
+    // Get the navigation menu element
+    const navigationElement = await page.$('.navigation');
+    if (!navigationElement) {
+      throw new Error('Navigation menu element not found');
+    }
+
+    // Get the style of the navigation menu
+    const navigationStyle = await page.evaluate(element => {
+      return window.getComputedStyle(element).getPropertyValue('left');
+    }, navigationElement);
+
+    // Check if the navigation menu is expanded (left: 0px) or collapsed (left: -200px)
+    if (navigationStyle === '0px') {
+      // If expanded, click on the "Players" link
+      await page.click('a[href="/players/"].item');
+    } else {
+      // If collapsed, click on the navigation toggle icon again to expand the menu
+      await page.click('i.fas.fa-bars');
+      await page.waitForTimeout(1000); // Adjust the timeout as needed
+
+      // Click on the "Players" link after the menu is expanded
+      await page.click('a[href="/players/"].item');
+    }
+
+    // Wait for the player card list to be visible
+    await page.waitForSelector('.playercardlist.online');
+
+    // Extract the player names
+    const playerNames = await page.evaluate(() => {
+      const playerCards = document.querySelectorAll('.playercardlist.online .player-name');
+      return Array.from(playerCards).map(card => card.textContent.trim());
+    });
+
+    // Log the player names
+    message.channel.send('Online Players:', playerNames.join(', '));
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    // Close the browser
+    await browser.close();
+  }
+}
 
 
 
@@ -333,6 +418,10 @@ client.on('messageCreate', message => {
     if (message.content.startsWith('/Playeronline')) {
         playerStatus(message); // Log if the start command is detected
         message.channel.send('Online Player');
+    }
+    if (message.content.startsWith('/Playernames)) {
+        playerNames(message); // Log if the start command is detected
+        message.channel.send('Online Player Names ');
     }
 
     // Your bot logic goes here
