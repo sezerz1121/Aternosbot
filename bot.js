@@ -253,7 +253,7 @@ async function  playerNames(message) {
 
     // Wait for the login to complete
     await page.waitForNavigation();
-    await page.waitForTimeout(4000);
+    
 
     // Click the server card (handle different scenarios)
     try {
@@ -270,13 +270,13 @@ async function  playerNames(message) {
       }
     }
 
-    await page.waitForTimeout(4000);
+    
     
     // Click on the navigation toggle icon to toggle the navigation menu
     await page.click('i.fas.fa-bars');
 
     // Wait for the navigation menu animation to complete
-    await page.waitForTimeout(1000); // Adjust the timeout as needed
+     // Adjust the timeout as needed
 
     // Get the navigation menu element
     const navigationElement = await page.$('.navigation');
@@ -296,7 +296,7 @@ async function  playerNames(message) {
     } else {
       // If collapsed, click on the navigation toggle icon again to expand the menu
       await page.click('i.fas.fa-bars');
-      await page.waitForTimeout(1000); // Adjust the timeout as needed
+       // Adjust the timeout as needed
 
       // Click on the "Players" link after the menu is expanded
       await page.click('a[href="/players/"].item');
