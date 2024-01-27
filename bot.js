@@ -234,7 +234,7 @@ async function startServer(message,onlineStatus) {
   }
 
 
-async function  playerNames(message) {
+async function playerNames(message) {
   const browser = await puppeteerExtra.launch({
     args: ['--no-sandbox'],
     headless: "new",
@@ -419,9 +419,9 @@ client.on('messageCreate', message => {
         playerStatus(message); // Log if the start command is detected
         message.channel.send('Online Player');
     }
-    if (message.content.startsWith('/Playernames)) {
+    if (message.content.startsWith('/Playernames')) {
         playerNames(message); // Log if the start command is detected
-        message.channel.send('Online Player Names ');
+        message.channel.send('Online Player Names');
     }
 
     // Your bot logic goes here
