@@ -313,7 +313,7 @@ async function playerNames(message) {
     });
 
     // Log the player names
-    message.channel.send('Online Players:', playerNames.join(', '));
+    message.channel.send('Online Players:'+ playerNames.join(', '));
   } catch (error) {
     console.error('Error:', error);
   } finally {
