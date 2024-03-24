@@ -25,7 +25,7 @@ async function startServer(message, onlineStatus) {
             "-no-sandbox",
             "-single-process",
             "-no-zygote",
-            headless: true,
+            
             executablePath:
             process.env.NODE_ENV === "production"
             ? process.env.PUPPETEER_EXECUTABLE_PAT
@@ -94,7 +94,7 @@ async function stopServer(message,onlineStatus)  {
             "-no-sandbox",
             "-single-process",
             "-no-zygote",
-            headless: true,
+            
             executablePath:
             process.env.NODE_ENV === "production"
             ? process.env.PUPPETEER_EXECUTABLE_PAT
@@ -140,7 +140,7 @@ async function startServer(message,onlineStatus) {
             "-no-sandbox",
             "-single-process",
             "-no-zygote",
-            headless: true,
+            
             executablePath:
             process.env.NODE_ENV === "production"
             ? process.env.PUPPETEER_EXECUTABLE_PAT
@@ -196,7 +196,7 @@ async function startServer(message,onlineStatus) {
             "-no-sandbox",
             "-single-process",
             "-no-zygote",
-            headless: true,
+           
             executablePath:
             process.env.NODE_ENV === "production"
             ? process.env.PUPPETEER_EXECUTABLE_PAT
@@ -237,7 +237,7 @@ async function startServer(message,onlineStatus) {
             "-no-sandbox",
             "-single-process",
             "-no-zygote",
-            headless: true,
+            
             executablePath:
             process.env.NODE_ENV === "production"
             ? process.env.PUPPETEER_EXECUTABLE_PAT
@@ -277,7 +277,7 @@ async function startServer(message,onlineStatus) {
             "-no-sandbox",
             "-single-process",
             "-no-zygote",
-            headless: true,
+         
             executablePath:
             process.env.NODE_ENV === "production"
             ? process.env.PUPPETEER_EXECUTABLE_PAT
@@ -343,7 +343,7 @@ async function startServer(message,onlineStatus) {
             "-no-sandbox",
             "-single-process",
             "-no-zygote",
-            headless: true,
+            
             executablePath:
             process.env.NODE_ENV === "production"
             ? process.env.PUPPETEER_EXECUTABLE_PAT
@@ -401,11 +401,19 @@ async function startServer(message,onlineStatus) {
 
 async function playerNames(message) {
 
-  const browser = await puppeteerExtra.launch({
-    args: ['--no-sandbox'],
-    headless: "new",
-    defaultViewport: null,
-  });
+  const browser = await puppeteer.launch({
+            args: [
+            "-disable-setuid-sandbox",
+            "-no-sandbox",
+            "-single-process",
+            "-no-zygote",
+            
+            executablePath:
+            process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PAT
+            : puppeteer.executablePath(),
+                
+            });
   const page = await browser.newPage();
 
   try {
