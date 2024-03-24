@@ -15,6 +15,7 @@ var username = "ZSadwa";
 var password = "n.85WpqgFasL*Yq";
 var onlineStatus =false;
 //functions 
+<<<<<<< HEAD
 async function startServer(message, onlineStatus) {
     try {
         // Launch the browser and open a new blank page
@@ -25,10 +26,11 @@ async function startServer(message, onlineStatus) {
             headless: "new",
         });
         const page = await browser.newPage();
+=======
+>>>>>>> 079f1a6166554246adafad1b5c1af5c71e02b7a7
 
-        // Navigate the page to a URL
-        await page.goto('https://aternos.org/go/');
 
+<<<<<<< HEAD
         // Fill in the username and password fields
        await page.waitForSelector('.username');
         await page.type('.username', username);
@@ -117,27 +119,141 @@ async function stopServer(message,onlineStatus)  {
     
   
     const browser = await puppeteerExtra.launch({
+=======
+async function startServer(message,onlineStatus) {
+    const browser = await puppeteerExtra.launch({
+>>>>>>> 079f1a6166554246adafad1b5c1af5c71e02b7a7
       args: ['--no-sandbox'],
       headless: "new",
+      defaultViewport: null,
     });
+  
     const page = await browser.newPage();
   
     try {
-      // Navigate the page to a URL
       await page.goto('https://aternos.org/go/');
+      await page.waitForSelector('.username');
   
-      // Fill in the username and password fields
       await page.type('.username', username);
       await page.type('.password', password);
-  
-      // Click the login button (if there's a specific button element)
       await page.click('.login-button');
   
-      // Wait for the login to complete
       await page.waitForNavigation();
-      await page.waitForTimeout(4000);
+      await page.waitForSelector('.servercard.offline');
+      await page.click('.servercard.offline');
+
+
+      
+      await page.waitForTimeout(3000);
+      await page.waitForSelector('#start');
+      await page.click('#start');
+   
   
-      // Click the server card (handle different scenarios)
+      let status = '';
+      while (true) {
+        await page.waitForTimeout(15000);
+        status = await page.evaluate(() => document.querySelector('.statuslabel-label')?.textContent.trim());
+        if (status === 'Online') {
+          message.channel.send('Server is online.');
+          onlineStatus = true;
+          break;
+        } else {
+          message.channel.send('Waiting for the server to start...');
+        }
+      }
+    } catch (error) {
+      console.error('Error occurred:', error.message);
+    } finally {
+      await browser.close();
+      return onlineStatus;
+    }
+  }
+  
+  async function stopServer(message,onlineStatus) {
+    const browser = await puppeteerExtra.launch({
+      args: ['--no-sandbox'],
+      headless: "new",
+      defaultViewport: null,
+    });
+  
+    const page = await browser.newPage();
+  
+    try {
+      await page.goto('https://aternos.org/go/');
+      await page.waitForSelector('.username');
+  
+      await page.type('.username', username);
+      await page.type('.password', password);
+      await page.click('.login-button');
+  
+      await page.waitForNavigation();
+      await page.waitForSelector('.servercard.online');
+      await page.click('.servercard.online');
+      await page.waitForTimeout(2000);
+      await page.click('#stop');
+  
+      onlineStatus = false;
+      message.channel.send('Server is stopped.');
+    } catch (error) {
+      console.error('Error occurred:', error.message);
+    } finally {
+      await browser.close();
+      return onlineStatus;
+    }
+  }
+  
+  async function restartServer(onlineStatus, message) {
+    const browser = await puppeteerExtra.launch({
+      args: ['--no-sandbox'],
+      headless: true,
+      defaultViewport: null,
+    });
+  
+    const page = await browser.newPage();
+  
+    try {
+      await page.goto('https://aternos.org/go/');
+      await page.waitForSelector('.username');
+  
+      await page.type('.username', username);
+      await page.type('.password', password);
+      await page.click('.login-button');
+  
+      await page.waitForNavigation();
+      await page.waitForSelector('.servercard.online');
+      await page.click('.servercard.online');
+      await page.waitForTimeout(2000);
+      await page.click('#restart');
+  
+      onlineStatus = true;
+      message.channel.send('Server is restarted.');
+    } catch (error) {
+      console.error('Error occurred:', error.message);
+    } finally {
+      await browser.close();
+      return onlineStatus;
+    }
+  }
+  
+  async function serverStatus(message) {
+    const browser = await puppeteerExtra.launch({
+      args: ['--no-sandbox'],
+      headless: "new",
+      defaultViewport: null,
+    });
+  
+    const page = await browser.newPage();
+  
+    try {
+      await page.goto('https://aternos.org/go/');
+      await page.waitForSelector('.username');
+  
+      await page.type('.username', username);
+      await page.type('.password', password);
+      await page.click('.login-button');
+  
+      
+      await page.waitForNavigation();
       try {
         await page.click('.servercard.online');
       } catch (error) {
@@ -152,7 +268,7 @@ async function stopServer(message,onlineStatus)  {
         }
       }
   
-      await page.waitForTimeout(4000);
+     
   
       // Wait for the status label to be present
       await page.waitForSelector('.statuslabel-label');
@@ -171,32 +287,31 @@ async function stopServer(message,onlineStatus)  {
       await browser.close();
     }
   }
+<<<<<<< HEAD
 
   async function playerStatus(message) {
     
+=======
+>>>>>>> 079f1a6166554246adafad1b5c1af5c71e02b7a7
   
+  async function playerStatus(message) {
     const browser = await puppeteerExtra.launch({
       args: ['--no-sandbox'],
       headless: "new",
+      defaultViewport: null,
     });
+  
     const page = await browser.newPage();
   
     try {
-      // Navigate the page to a URL
       await page.goto('https://aternos.org/go/');
+      await page.waitForSelector('.username');
   
-      // Fill in the username and password fields
       await page.type('.username', username);
       await page.type('.password', password);
-  
-      // Click the login button (if there's a specific button element)
       await page.click('.login-button');
   
-      // Wait for the login to complete
       await page.waitForNavigation();
-      await page.waitForTimeout(4000);
-  
-      // Click the server card (handle different scenarios)
       try {
         await page.click('.servercard.online');
       } catch (error) {
@@ -211,7 +326,7 @@ async function stopServer(message,onlineStatus)  {
         }
       }
   
-      await page.waitForTimeout(4000);
+      
   
       
   
@@ -234,16 +349,93 @@ async function stopServer(message,onlineStatus)  {
   }
 
 
+async function playerNames(message) {
 
+  const browser = await puppeteerExtra.launch({
+    args: ['--no-sandbox'],
+    headless: "new",
+    defaultViewport: null,
+  });
+  const page = await browser.newPage();
 
+  try {
+    // Navigate to the page
+    await page.goto('https://aternos.org/go/');
+    await page.type('.username', username);
+    await page.type('.password', password);
 
+    // Click the login button (if there's a specific button element)
+    await page.click('.login-button');
 
+    // Wait for the login to complete
+    await page.waitForNavigation();
+    await page.waitForTimeout(4000);
 
+    // Click the server card (handle different scenarios)
+    try {
+      await page.click('.servercard.online');
+    } catch (error) {
+      try {
+        await page.click('.servercard.offline');
+      } catch (error) {
+        try {
+          await page.click('.servercard.loading');
+        } catch (error) {
+          console.error('Error clicking server card:', error.message);
+        }
+      }
+    }
 
+    await page.waitForTimeout(4000);
+    
+    // Click on the navigation toggle icon to toggle the navigation menu
+    await page.click('i.fas.fa-bars');
 
+    // Wait for the navigation menu animation to complete
+    await page.waitForTimeout(1000); // Adjust the timeout as needed
 
+    // Get the navigation menu element
+    const navigationElement = await page.$('.navigation');
+    if (!navigationElement) {
+      throw new Error('Navigation menu element not found');
+    }
 
+    // Get the style of the navigation menu
+    const navigationStyle = await page.evaluate(element => {
+      return window.getComputedStyle(element).getPropertyValue('left');
+    }, navigationElement);
 
+    // Check if the navigation menu is expanded (left: 0px) or collapsed (left: -200px)
+    if (navigationStyle === '0px') {
+      // If expanded, click on the "Players" link
+      await page.click('a[href="/players/"].item');
+    } else {
+      // If collapsed, click on the navigation toggle icon again to expand the menu
+      await page.click('i.fas.fa-bars');
+      await page.waitForTimeout(1000); // Adjust the timeout as needed
+
+      // Click on the "Players" link after the menu is expanded
+      await page.click('a[href="/players/"].item');
+    }
+
+    // Wait for the player card list to be visible
+    await page.waitForSelector('.playercardlist.online');
+
+    // Extract the player names
+    const playerNames = await page.evaluate(() => {
+      const playerCards = document.querySelectorAll('.playercardlist.online .player-name');
+      return Array.from(playerCards).map(card => card.textContent.trim());
+    });
+
+    // Log the player names
+    message.channel.send('Online Players:'+ playerNames.join(', '));
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    // Close the browser
+    await browser.close();
+  }
+}
 
 
 
@@ -342,6 +534,10 @@ client.on('messageCreate', message => {
     if (message.content.startsWith('/Playeronline')) {
         playerStatus(message); // Log if the start command is detected
         message.channel.send('Online Player');
+    }
+    if (message.content.startsWith('/Playernames')) {
+        playerNames(message); // Log if the start command is detected
+        message.channel.send('Online Player Names');
     }
 
     // Your bot logic goes here
