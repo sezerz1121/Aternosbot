@@ -18,9 +18,9 @@ var onlineStatus =false;
 async function startServer(message, onlineStatus) {
     try {
         // Launch the browser and open a new blank page
-        const chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+       
         const browser = await puppeteerExtra.launch({
-            executablePath: chromePath,
+            args: ['--no-sandbox'],
             // Set to true for headless mode
             headless: "new",
         });
@@ -30,7 +30,9 @@ async function startServer(message, onlineStatus) {
         await page.goto('https://aternos.org/go/');
 
         // Fill in the username and password fields
+       await page.waitForSelector('.username');
         await page.type('.username', username);
+        await page.waitForSelector('.password');
         await page.type('.password', password);
 
         // Click the login button (if there's a specific button element)
@@ -60,7 +62,7 @@ async function startServer(message, onlineStatus) {
                 message.channel.send('Online');
                 onlineStatus = true;
                 break; // Exit the loop once status is "Online"
-            } else {
+            } else if(status === 'Online') {
                 // Log "Status is not 'Online' yet. Retrying..." message to Discord
                 message.channel.send('Starting');
                 await page.waitForTimeout(15000); // Wait for 15 seconds before retrying
@@ -77,10 +79,10 @@ async function startServer(message, onlineStatus) {
 
 async function stopServer(message,onlineStatus)  {
     // Launch the browser and open a new blank page
-    const chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+    
   
     const browser = await puppeteerExtra.launch({
-      executablePath: chromePath,
+         args: ['--no-sandbox'],
        // Set to true for headless mode
        headless: "new",
     });
@@ -112,10 +114,10 @@ async function stopServer(message,onlineStatus)  {
   };
 
   async function serverStatus(message) {
-    const chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+    
   
     const browser = await puppeteerExtra.launch({
-      executablePath: chromePath,
+      args: ['--no-sandbox'],
       headless: "new",
     });
     const page = await browser.newPage();
@@ -171,10 +173,10 @@ async function stopServer(message,onlineStatus)  {
   }
 
   async function playerStatus(message) {
-    const chromePath = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+    
   
     const browser = await puppeteerExtra.launch({
-      executablePath: chromePath,
+      args: ['--no-sandbox'],
       headless: "new",
     });
     const page = await browser.newPage();
