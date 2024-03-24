@@ -26,10 +26,10 @@ async function startServer(message, onlineStatus) {
             "-single-process",
             "-no-zygote",
             
-            executablePath:
-            process.env.NODE_ENV === "production"
-            ? process.env.PUPPETEER_EXECUTABLE_PAT
-            : puppeteer.executablePath(),
+           executablePath: process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
+
                 
             });
         
@@ -95,10 +95,9 @@ async function stopServer(message,onlineStatus)  {
             "-single-process",
             "-no-zygote",
             
-            executablePath:
-            process.env.NODE_ENV === "production"
-            ? process.env.PUPPETEER_EXECUTABLE_PAT
-            : puppeteer.executablePath(),
+            executablePath: process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
                 
             });
     const page = await browser.newPage();
@@ -141,10 +140,9 @@ async function startServer(message,onlineStatus) {
             "-single-process",
             "-no-zygote",
             
-            executablePath:
-            process.env.NODE_ENV === "production"
-            ? process.env.PUPPETEER_EXECUTABLE_PAT
-            : puppeteer.executablePath(),
+            executablePath: process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
                 
             });
   
@@ -197,10 +195,9 @@ async function startServer(message,onlineStatus) {
             "-single-process",
             "-no-zygote",
            
-            executablePath:
-            process.env.NODE_ENV === "production"
-            ? process.env.PUPPETEER_EXECUTABLE_PAT
-            : puppeteer.executablePath(),
+            executablePath: process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
                 
             });
   
@@ -238,10 +235,9 @@ async function startServer(message,onlineStatus) {
             "-single-process",
             "-no-zygote",
             
-            executablePath:
-            process.env.NODE_ENV === "production"
-            ? process.env.PUPPETEER_EXECUTABLE_PAT
-            : puppeteer.executablePath(),
+             executablePath: process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
                 
             });
     const page = await browser.newPage();
@@ -278,10 +274,9 @@ async function startServer(message,onlineStatus) {
             "-single-process",
             "-no-zygote",
          
-            executablePath:
-            process.env.NODE_ENV === "production"
-            ? process.env.PUPPETEER_EXECUTABLE_PAT
-            : puppeteer.executablePath(),
+           executablePath: process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
                 
             });
   
@@ -344,10 +339,9 @@ async function startServer(message,onlineStatus) {
             "-single-process",
             "-no-zygote",
             
-            executablePath:
-            process.env.NODE_ENV === "production"
-            ? process.env.PUPPETEER_EXECUTABLE_PAT
-            : puppeteer.executablePath(),
+           executablePath: process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
                 
             });
   
@@ -408,10 +402,9 @@ async function playerNames(message) {
             "-single-process",
             "-no-zygote",
             
-            executablePath:
-            process.env.NODE_ENV === "production"
-            ? process.env.PUPPETEER_EXECUTABLE_PAT
-            : puppeteer.executablePath(),
+           executablePath: process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
                 
             });
   const page = await browser.newPage();
