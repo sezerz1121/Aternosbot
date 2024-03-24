@@ -34,11 +34,8 @@ async function startServer(message, onlineStatus) {
             });
         
         const page = await browser.newPage();
-=======
->>>>>>> 079f1a6166554246adafad1b5c1af5c71e02b7a7
 
 
-<<<<<<< HEAD
         // Fill in the username and password fields
        await page.waitForSelector('.username');
         await page.type('.username', username);
@@ -91,11 +88,19 @@ async function stopServer(message,onlineStatus)  {
     // Launch the browser and open a new blank page
     
   
-    const browser = await puppeteerExtra.launch({
-         args: ['--no-sandbox'],
-       // Set to true for headless mode
-       headless: "new",
-    });
+    const browser = await puppeteer.launch({
+            args: [
+            "-disable-setuid-sandbox",
+            "-no-sandbox",
+            "-single-process",
+            "-no-zygote",
+            headless: true,
+            executablePath:
+            process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PAT
+            : puppeteer.executablePath(),
+                
+            });
     const page = await browser.newPage();
   
     // Navigate the page to a URL
@@ -127,14 +132,21 @@ async function stopServer(message,onlineStatus)  {
     
   
     const browser = await puppeteerExtra.launch({
-=======
+
 async function startServer(message,onlineStatus) {
-    const browser = await puppeteerExtra.launch({
->>>>>>> 079f1a6166554246adafad1b5c1af5c71e02b7a7
-      args: ['--no-sandbox'],
-      headless: "new",
-      defaultViewport: null,
-    });
+  const browser = await puppeteer.launch({
+            args: [
+            "-disable-setuid-sandbox",
+            "-no-sandbox",
+            "-single-process",
+            "-no-zygote",
+            headless: true,
+            executablePath:
+            process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PAT
+            : puppeteer.executablePath(),
+                
+            });
   
     const page = await browser.newPage();
   
@@ -178,11 +190,19 @@ async function startServer(message,onlineStatus) {
   }
   
   async function stopServer(message,onlineStatus) {
-    const browser = await puppeteerExtra.launch({
-      args: ['--no-sandbox'],
-      headless: "new",
-      defaultViewport: null,
-    });
+    const browser = await puppeteer.launch({
+            args: [
+            "-disable-setuid-sandbox",
+            "-no-sandbox",
+            "-single-process",
+            "-no-zygote",
+            headless: true,
+            executablePath:
+            process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PAT
+            : puppeteer.executablePath(),
+                
+            });
   
     const page = await browser.newPage();
   
@@ -211,12 +231,19 @@ async function startServer(message,onlineStatus) {
   }
   
   async function restartServer(onlineStatus, message) {
-    const browser = await puppeteerExtra.launch({
-      args: ['--no-sandbox'],
-      headless: true,
-      defaultViewport: null,
-    });
-  
+    const browser = await puppeteer.launch({
+            args: [
+            "-disable-setuid-sandbox",
+            "-no-sandbox",
+            "-single-process",
+            "-no-zygote",
+            headless: true,
+            executablePath:
+            process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PAT
+            : puppeteer.executablePath(),
+                
+            });
     const page = await browser.newPage();
   
     try {
@@ -244,11 +271,19 @@ async function startServer(message,onlineStatus) {
   }
   
   async function serverStatus(message) {
-    const browser = await puppeteerExtra.launch({
-      args: ['--no-sandbox'],
-      headless: "new",
-      defaultViewport: null,
-    });
+    const browser = await puppeteer.launch({
+            args: [
+            "-disable-setuid-sandbox",
+            "-no-sandbox",
+            "-single-process",
+            "-no-zygote",
+            headless: true,
+            executablePath:
+            process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PAT
+            : puppeteer.executablePath(),
+                
+            });
   
     const page = await browser.newPage();
   
@@ -295,19 +330,26 @@ async function startServer(message,onlineStatus) {
       await browser.close();
     }
   }
-<<<<<<< HEAD
+
 
   async function playerStatus(message) {
     
-=======
->>>>>>> 079f1a6166554246adafad1b5c1af5c71e02b7a7
+
   
   async function playerStatus(message) {
-    const browser = await puppeteerExtra.launch({
-      args: ['--no-sandbox'],
-      headless: "new",
-      defaultViewport: null,
-    });
+   const browser = await puppeteer.launch({
+            args: [
+            "-disable-setuid-sandbox",
+            "-no-sandbox",
+            "-single-process",
+            "-no-zygote",
+            headless: true,
+            executablePath:
+            process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PAT
+            : puppeteer.executablePath(),
+                
+            });
   
     const page = await browser.newPage();
   
