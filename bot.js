@@ -25,7 +25,7 @@ async function startServer(message, onlineStatus) {
             "-no-sandbox",
             "-single-process",
             "-no-zygote",
-            headless: "new",
+            headless: true,
             executablePath:
             process.env.NODE_ENV === "production"
             ? process.env.PUPPETEER_EXECUTABLE_PAT
