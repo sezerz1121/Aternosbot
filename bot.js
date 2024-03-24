@@ -43,7 +43,7 @@ async function startServer(message,onlineStatus) {
       await page.waitForTimeout(3000);
       await page.waitForSelector('#start');
       await page.click('#start');
-      await page.click('#start');
+   
   
       let status = '';
       while (true) {
