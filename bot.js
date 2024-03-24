@@ -19,12 +19,20 @@ var onlineStatus =false;
 async function startServer(message, onlineStatus) {
     try {
         // Launch the browser and open a new blank page
-       
-        const browser = await puppeteerExtra.launch({
-            args: ['--no-sandbox'],
-            // Set to true for headless mode
-            headless: "new",
-        });
+       const browser = await puppeteer.launch({
+            args: [
+            "-disable-setuid-sandbox",
+            "-no-sandbox",
+            "-single-process",
+            "-no-zygote",
+            1,
+            executablePath:
+            process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PAT
+            : puppeteer.executablePath(),
+                headless: "new",
+            });
+        
         const page = await browser.newPage();
 =======
 >>>>>>> 079f1a6166554246adafad1b5c1af5c71e02b7a7
