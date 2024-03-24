@@ -37,7 +37,7 @@ async function startServer(message,onlineStatus) {
       await page.waitForNavigation();
       await page.waitForSelector('.servercard.offline');
       await page.click('.servercard.offline');
-      await page.waitForTimeout(2000);
+
 
       
       await page.waitForTimeout(3000);
