@@ -15,7 +15,7 @@ var username = "ZSadwa";
 var password = "n.85WpqgFasL*Yq";
 var onlineStatus =false;
 //functions 
-<<<<<<< HEAD
+
 async function startServer(message, onlineStatus) {
     try {
         // Launch the browser and open a new blank page
