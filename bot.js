@@ -38,10 +38,9 @@ async function startServer(message,onlineStatus) {
       await page.waitForSelector('.servercard.offline');
       await page.click('.servercard.offline');
       await page.waitForTimeout(2000);
-      await page.waitForSelector('.btn.btn-white.CspDLDFOEQRw');
-      await page.click('.btn.btn-white.CspDLDFOEQRw');
+
       
-      await page.waitForTimeout(5000);
+      await page.waitForTimeout(3000);
       await page.waitForSelector('#start');
       await page.click('#start');
       await page.click('#start');
