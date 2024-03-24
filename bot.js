@@ -25,12 +25,12 @@ async function startServer(message, onlineStatus) {
             "-no-sandbox",
             "-single-process",
             "-no-zygote",
-            1,
+            headless: "new",
             executablePath:
             process.env.NODE_ENV === "production"
             ? process.env.PUPPETEER_EXECUTABLE_PAT
             : puppeteer.executablePath(),
-                headless: "new",
+                
             });
         
         const page = await browser.newPage();
